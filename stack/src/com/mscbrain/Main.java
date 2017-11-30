@@ -1,43 +1,50 @@
 package com.mscbrain;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
+import java.util.Stack;
 
 public class Main {
 
-    public static void main(String[] args) {
-	    // write your code here
-        Scanner sc = new Scanner(System.in);
+  public static void main(String[] args) {
+    // write your code here
+    Scanner sc = new Scanner(System.in);
 
-        int lastNum = 1;
-        int testCase = sc.nextInt();
+    int popNum;
+    int lastNum = 1;
+    int testCase = sc.nextInt();
 
-        List<String> list = new ArrayList<>();
-        for(int i = 1; i <= testCase + 1; i++){
-            int number = sc.nextInt();
+    Stack<Integer> stack = new Stack<>();
+    StringBuilder sb = new StringBuilder();
+    for(int i = 1; i <= testCase; i++){
+      int number = sc.nextInt();
 
-            if(list.size() > 0 && list.get(list.size()-1).equals(String.valueOf(number))){
-                System.out.println("-");
-                list.remove(String.valueOf(number));
-            }else{
-                for(int j = lastNum; j <= number; j++){
-                    System.out.println("+");
-                    list.add(String.valueOf(j));
-                }
-                if(list.get(list.size()-1).equals(String.valueOf(number))){
-                    System.out.println("-");
-                    list.remove(String.valueOf(number));
-                }else{
-                    System.out.println("NO");
-                    break;
-                }
-            }
+      for(int j = lastNum; j <= number; j++){
+        sb.append("+\n");
+        stack.push(j);
+      }
 
-            if(lastNum < number){
-                lastNum = number + 1;
-            }
+      if(!stack.empty()){
+        popNum = stack.pop();
+      }else{
+        System.out.println("NO");
+        break;
+      }
 
-        }
+      if(popNum == number){
+        sb.append("-\n");
+      }else{
+        sb = new StringBuilder();
+        System.out.println("NO");
+        break;
+      }
+
+      if(lastNum < number){
+        lastNum = number + 1;
+      }
+
     }
+
+    System.out.println(sb);
+
+  }
 }
