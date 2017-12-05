@@ -1,44 +1,33 @@
 package com.mscbrain;
 
-import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) {
-	    // write your code here
-        Scanner sc = new Scanner(System.in);
+  public static void main(String[] args) throws Exception {
+    // write your code here
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        int ropeCnt = sc.nextInt();
-        List<String> ropeLimit = new ArrayList<>();
+    int ropeCnt = Integer.parseInt(br.readLine());
+    int[] ropeLimit = new int[ropeCnt];
 
-        for (int i = 0; i < ropeCnt; i++) {
-            ropeLimit.add(String.valueOf(sc.nextInt()));
-        }
-
-        Arrays.sort(ropeLimit.toArray());
-
-        int min = 0;
-        int size = ropeCnt;
-        List<Integer> list = new ArrayList<>();
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < ropeLimit.size(); j++) {
-                if (j == 0) {
-                    min = Integer.parseInt(ropeLimit.get(j));
-                }
-
-                if(min > Integer.parseInt(ropeLimit.get(j))){
-                    min = Integer.parseInt(ropeLimit.get(j));
-                }
-            }
-            list.add(ropeCnt * min);
-            ropeLimit.remove(String.valueOf(min));
-            ropeCnt--;
-        }
-
-        System.out.println(Collections.max(list));
+    for (int i = 0; i < ropeCnt; i++) {
+      ropeLimit[i] = Integer.parseInt(br.readLine());
     }
+
+    Arrays.sort(ropeLimit);
+
+    int max = 0;
+    for (int i = ropeCnt - 1; i > -1; i--) {
+
+      if(max < (ropeCnt - i) * ropeLimit[i]){
+        max = (ropeCnt - i) * ropeLimit[i];
+      }
+
+    }
+
+    System.out.println(max);
+  }
 }
